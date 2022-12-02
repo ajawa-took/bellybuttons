@@ -34,12 +34,16 @@ function buildCharts(sample) {
   var samples = data.samples;
   var resultArray = samples.filter(sampleObj => sampleObj.id == sample);
   var result = resultArray[0];
-      // 8. Create the trace for the bar chart. 
-  
-  //    result.otu_ids, result.otu_labels, result.sample_values
+  //  data i want for chart:  result.otu_ids, result.otu_labels, result.sample_values
+  //  todo: add "OTU " to otu_id , simple + works
+  //  GET TOP 10 -- sample_values are already sorted descending!!
 
-  var barData = [ {x: result.sample_values, y: result.otu_ids, 
-      text: result.otu_labels,
+  var yticks = result.otu_ids.slice(0,10).reverse().map(x => "OTU "+ x );
+  var xvals = result.sample_values.slice(0,10).reverse();
+  var ytext = result.otu_labels.slice(0,10).reverse();
+
+  var barData = [ {x: xvals, y: yticks, 
+      text: ytext,
       type: "bar", orientation: 'h'}];
       // 9. Create the layout for the bar chart. 
   var barLayout = {title : "Top 10 Bacteria Cultures Found"};
